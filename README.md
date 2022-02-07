@@ -14,7 +14,7 @@
  
 ## Initial Questions
 
--  ?  
+- What are the most frequently occuring words?  
 
 -  ?
 
