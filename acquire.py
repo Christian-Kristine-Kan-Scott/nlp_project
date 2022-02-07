@@ -15,28 +15,13 @@ import os
 import json
 from typing import Dict, List, Optional, Union, cast
 import requests
-
+from bs4 import BeautifulSoup
+import re
 from env import github_token, github_username
 
-# TODO: Make a github personal access token.
-#     1. Go here and generate a personal access token https://github.com/settings/tokens
-#        You do _not_ need select any scopes, i.e. leave all the checkboxes unchecked
-#     2. Save it in your env.py file under the variable `github_token`
-# TODO: Add your github username to your env.py file under the variable `github_username`
 # TODO: Add more repositories to the `REPOS` list below.
 
-REPOS = [
-    "gocodeup/codeup-setup-script",
-    "gocodeup/movies-application",
-    "torvalds/linux",
-]
 
-headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
-
-if headers["Authorization"] == "token " or headers["User-Agent"] == "":
-    raise Exception(
-        "You need to follow the instructions marked TODO in this script before trying to use it"
-    )
 
 
 def github_api_request(url: str) -> Union[List, Dict]:
@@ -104,14 +89,48 @@ def process_repo(repo: str) -> Dict[str, str]:
         "readme_contents": readme_contents,
     }
 
-
-def scrape_github_data() -> List[Dict[str, str]]:
+def scrape_github_data(REPOS) -> List[Dict[str, str]]:
     """
     Loop through all of the repos and process them. Returns the processed data.
     """
     return [process_repo(repo) for repo in REPOS]
 
+def get_repo_names(url, headers):
+    page_num = 2
+    REPOS = []
+
+    while page_num < 10:
+
+        response = requests.get(url, headers=headers)
+        html = response.text
+        soup = BeautifulSoup(html, features="html.parser")
+        links = soup.find_all("a", class_="v-align-middle")
+
+        for link in links:
+            print(link["href"])
+            REPOS.append(link["href"])
+
+        next_page = f"https://github.com{soup.find('a', class_='next_page')['href']}"
+        url = re.sub(r"[0-9]", f"{page_num}", next_page)
+
+        page_num += 1
+
+    return REPOS
+
+def main():
+
+    headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
+
+    if headers["Authorization"] == "token " or headers["User-Agent"] == "":
+        raise Exception(
+            "You need to follow the instructions marked TODO in this script before trying to use it"
+        )
+
+    url = "https://github.com/search?q=nutrition"
+    REPOS = get_repo_names(url, headers)
+    print(len(REPOS))
+    # data = scrape_github_data(REPOS)
+    # json.dump(data, open("data.json", "w"), indent=1)
 
 if __name__ == "__main__":
-    data = scrape_github_data()
-    json.dump(data, open("data.json", "w"), indent=1)
+    main()
