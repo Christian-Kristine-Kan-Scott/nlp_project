@@ -93,7 +93,7 @@ def scrape_github_data(REPOS) -> List[Dict[str, str]]:
     """
     return [process_repo(repo) for repo in REPOS]
 
-def get_repo_names(url, headers, page_num=5):
+def get_repo_names(url, headers, page_num=13):
     REPOS = []
 
     while page_num < 51:
@@ -127,9 +127,11 @@ def main():
             "You need to follow the instructions marked TODO in this script before trying to use it"
         )
 
-    url = "https://github.com/search?p=5&q=nutrition&type=Repositories"
+    url = "https://github.com/search?p=13&q=nutrition&type=Repositories"
     REPOS = get_repo_names(url, headers)
-    print(len(REPOS))
+
+    # with open("repo_name.txt", "r") as names:
+    #     names = names.readlines()
     # data = scrape_github_data(REPOS)
     # json.dump(data, open("data.json", "w"), indent=1)
 
