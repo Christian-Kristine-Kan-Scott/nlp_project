@@ -52,7 +52,10 @@ In this project, we will utilize the text in README files of x repositories that
 
 
 ##  Steps to Reproduce
-
+- Acquire dataset
+- Clone my repo (including an acquire.py and prepare.py) (confirm .gitignore is hiding your env.py file)
+- Libraries used are pandas, matplotlib, seaborn, numpy, sklearn.
+- Document conclusions, takeaways, and next steps in the Final Report Notebook.
 
 
 
