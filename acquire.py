@@ -94,8 +94,9 @@ def scrape_github_data(REPOS) -> List[Dict[str, str]]:
     return [process_repo(repo) for repo in REPOS]
 
 def get_repo_names(url, headers, page_num=13):
-    REPOS = []
+    ### in the above function definition, change page_num
 
+    REPOS = []
     while page_num < 51:
 
         response = requests.get(url, headers=headers)
@@ -127,6 +128,7 @@ def main():
             "You need to follow the instructions marked TODO in this script before trying to use it"
         )
 
+    ### in the url change the number
     url = "https://github.com/search?p=13&q=nutrition&type=Repositories"
     REPOS = get_repo_names(url, headers)
 
