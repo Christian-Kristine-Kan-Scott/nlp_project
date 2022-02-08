@@ -87,13 +87,13 @@ def process_repo(repo: str, headers) -> Dict[str, str]:
         "readme_contents": readme_contents,
     }
 
-def scrape_github_data(REPOS) -> List[Dict[str, str]]:
+def scrape_github_data(REPOS, headers) -> List[Dict[str, str]]:
     """
     Loop through all of the repos and process them. Returns the processed data.
     """
-    return [process_repo(repo) for repo in REPOS]
+    return [process_repo(repo, headers) for repo in REPOS]
 
-def get_repo_names(url, headers, page_num=13):
+def get_repo_names(url, headers, page_num=14):
     ### in the above function definition, change page_num
 
     REPOS = []
@@ -129,13 +129,15 @@ def main():
         )
 
     ### in the url change the number
-    url = "https://github.com/search?p=13&q=nutrition&type=Repositories"
-    REPOS = get_repo_names(url, headers)
+    # url = "https://github.com/search?p=14&q=nutrition&type=Repositories"
+    # REPOS = get_repo_names(url, headers)
 
-    # with open("repo_name.txt", "r") as names:
-    #     names = names.readlines()
-    # data = scrape_github_data(REPOS)
-    # json.dump(data, open("data.json", "w"), indent=1)
+    with open("repo_names.txt", "r") as names:
+        REPOS = names.readlines()
+        REPOS = [name.replace("\n", "") for name in REPOS]
+
+    data = scrape_github_data(REPOS, headers)
+    json.dump(data, open("data.json", "w"), indent=1)
 
 if __name__ == "__main__":
     main()
