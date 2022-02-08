@@ -12,26 +12,26 @@ In this project, we will utilize the text in README files of x repositories that
 
 ## The Plan
 
-Plan - Acquire - Prepare - Explore - Model - Deliver
+**Plan - Acquire - Prepare - Explore - Model - Deliver**
 
--Wrangle
-    -Acquire data via webscraping Github through class provided script
-    -Prepare data by creating basic clean functions such as tokenize, removing stopwords, lemmatize
-    -We will create a function that we can reference later to acquire and prepare the data by storing the function in a file name wrangle.py
+- Wrangle
+    - Acquire data via webscraping Github through class provided script
+    - Prepare data by creating basic clean functions such as tokenize, removing stopwords, lemmatize
+    - We will create a function that we can reference later to acquire and prepare the data by storing the function in a file name wrangle.py
     -We will split our data to a train, validate, and test
--Explore
-    -Create visualizations of data to pin point key text words that correllate to programming languages
-    -Create a visualizations correlating to hypotheses statements
-    -Run at least two statistical tests that will support whether the hypothesis has been rejected or not
--Modeling
-    Establish baseline
-    Ensure models are tested on appropriate validate and test datasets
-    Determine best performing model and test on test dataset
--Delivery
-    -README with project details
-    -Python modules with acquire and prepare functions
-    -Final Report in Jupyter Notebook
-    -Presentation with slide show entailing executive summary details
+- Explore
+    - Create visualizations of data to pin point key text words that correllate to programming languages
+    - Create a visualizations correlating to hypotheses statements
+    - Run at least two statistical tests that will support whether the hypothesis has been rejected or not
+- Modeling
+    - Establish baseline
+    - Ensure models are tested on appropriate validate and test datasets
+    - Determine best performing model and test on test dataset
+- Delivery
+    - README with project details
+    - Python modules with acquire and prepare functions
+    - Final Report in Jupyter Notebook
+    - Presentation with slide show entailing executive summary details
 
 
 
