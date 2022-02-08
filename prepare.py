@@ -3,7 +3,6 @@ import re
 import nltk
 from nltk.tokenize.toktok import ToktokTokenizer
 from nltk.corpus import stopwords
-from acquire import Acquire
 from nltk.stem import WordNetLemmatizer
 
 class Prepare:
@@ -48,7 +47,6 @@ class Prepare:
         """
 
         ps = nltk.porter.PorterStemmer()
-        # ps = PorterStemmer()
         stems = [ps.stem(word) for word in string.split()]
         return  ' '.join(stems)
 
