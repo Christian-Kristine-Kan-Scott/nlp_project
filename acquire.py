@@ -115,7 +115,7 @@ def get_repo_names(url, headers, page_num=13):
         page_num += 1
         url = re.sub(r"[0-9]", f"{page_num}", next_page)
 
-        sleep(30)
+        sleep(10)
 
     return REPOS
 
