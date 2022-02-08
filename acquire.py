@@ -18,13 +18,11 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from env import github_token, github_username
+from  time import sleep
 
 # TODO: Add more repositories to the `REPOS` list below.
 
-
-
-
-def github_api_request(url: str) -> Union[List, Dict]:
+def github_api_request(url: str, headers) -> Union[List, Dict]:
     response = requests.get(url, headers=headers)
     response_data = response.json()
     if response.status_code != 200:
@@ -35,9 +33,9 @@ def github_api_request(url: str) -> Union[List, Dict]:
     return response_data
 
 
-def get_repo_language(repo: str) -> str:
+def get_repo_language(repo: str, headers) -> str:
     url = f"https://api.github.com/repos/{repo}"
-    repo_info = github_api_request(url)
+    repo_info = github_api_request(url, headers)
     if type(repo_info) is dict:
         repo_info = cast(Dict, repo_info)
         if "language" not in repo_info:
@@ -50,9 +48,9 @@ def get_repo_language(repo: str) -> str:
     )
 
 
-def get_repo_contents(repo: str) -> List[Dict[str, str]]:
+def get_repo_contents(repo: str, headers) -> List[Dict[str, str]]:
     url = f"https://api.github.com/repos/{repo}/contents/"
-    contents = github_api_request(url)
+    contents = github_api_request(url, headers)
     if type(contents) is list:
         contents = cast(List, contents)
         return contents
@@ -72,12 +70,12 @@ def get_readme_download_url(files: List[Dict[str, str]]) -> str:
     return ""
 
 
-def process_repo(repo: str) -> Dict[str, str]:
+def process_repo(repo: str, headers) -> Dict[str, str]:
     """
     Takes a repo name like "gocodeup/codeup-setup-script" and returns a
     dictionary with the language of the repo and the readme contents.
     """
-    contents = get_repo_contents(repo)
+    contents = get_repo_contents(repo, headers)
     readme_download_url = get_readme_download_url(contents)
     if readme_download_url == "":
         readme_contents = ""
@@ -95,25 +93,28 @@ def scrape_github_data(REPOS) -> List[Dict[str, str]]:
     """
     return [process_repo(repo) for repo in REPOS]
 
-def get_repo_names(url, headers):
-    page_num = 2
+def get_repo_names(url, headers, page_num=5):
     REPOS = []
 
-    while page_num < 10:
+    while page_num < 51:
 
         response = requests.get(url, headers=headers)
+        print(page_num, response.status_code)
         html = response.text
         soup = BeautifulSoup(html, features="html.parser")
         links = soup.find_all("a", class_="v-align-middle")
 
         for link in links:
-            print(link["href"])
-            REPOS.append(link["href"])
+            name = link["href"]
+            REPOS.append(name)
+            with open("repo_names.txt", "a") as names:
+                names.write(F"{name}\n")
 
         next_page = f"https://github.com{soup.find('a', class_='next_page')['href']}"
+        page_num += 1
         url = re.sub(r"[0-9]", f"{page_num}", next_page)
 
-        page_num += 1
+        sleep(30)
 
     return REPOS
 
@@ -126,7 +127,7 @@ def main():
             "You need to follow the instructions marked TODO in this script before trying to use it"
         )
 
-    url = "https://github.com/search?q=nutrition"
+    url = "https://github.com/search?p=5&q=nutrition&type=Repositories"
     REPOS = get_repo_names(url, headers)
     print(len(REPOS))
     # data = scrape_github_data(REPOS)
