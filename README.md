@@ -18,7 +18,7 @@ In this project, we will utilize the text in README files of x repositories that
     - Acquire data via webscraping Github through class provided script
     - Prepare data by creating basic clean functions such as tokenize, removing stopwords, lemmatize
     - We will create a function that we can reference later to acquire and prepare the data by storing the function in a file name wrangle.py
-    -We will split our data to a train, validate, and test
+    - We will split our data to a train, validate, and test
 - Explore
     - Create visualizations of data to pin point key text words that correllate to programming languages
     - Create a visualizations correlating to hypotheses statements
