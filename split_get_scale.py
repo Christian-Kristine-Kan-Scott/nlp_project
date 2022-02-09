@@ -8,7 +8,7 @@ class SplitGetScale:
 
     def split(self, df):
 
-        train, test = train_test_split(df, test_size=.2, random_state=123)
+        train, test = train_test_split(df, test_size=.2, random_state=123, stratify=df["language"])
 
         return train, test
 
