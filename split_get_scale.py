@@ -2,6 +2,7 @@ from prepare import Prepare
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 class SplitGetScale:
 
@@ -19,9 +20,17 @@ class SplitGetScale:
             X_val = validate.drop(cols_drop, axis=1)
             X_test = test.drop(cols_drop, axis=1)
 
+        tfid = TfidfVectorizer()
+
+        X_train =
+        X_val =
+        X_test =
+
         y_train = train["language"]
         y_val = validate["language"]
         y_test = test["language"]
+
+
 
         return (X_train, y_train), (X_val, y_val), (X_test, y_test)
 
