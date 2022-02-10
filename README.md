@@ -67,11 +67,11 @@ In this project, we will utilize the text in README files of x repositories that
 
 | Variable          | Description                            |Data types|
 | ----------------- | -------------------------------------- |----------|
-|                   |                                        |          |
-|                   |                                        |          |
-|                   |                                        |          |
-|                   |                                        |          |
-|                   |                                        |          |
+| language          |Differents languages in the READme      |          |
+| readme_contents   |Contents of the Readme                  |          |
+| clean             |Clean Version of the Readme contents    |          |
+| clean_stemmed     |Stemmed version of the clean ReadMe     |          |
+| clean_lemmatized  |                                        |          |
 | 
  
 ## Key findings, recommendations and takeaways
@@ -84,3 +84,4 @@ In this project, we will utilize the text in README files of x repositories that
 ## Next steps
  
 
+language,readme_contents,clean,clean_stemmed,clean_lemmatized
