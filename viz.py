@@ -100,5 +100,109 @@ def q3_viz():
     ax.set_ylabel("Average Length of READme")
 =======
     ax.set(title='Distribution of Languages in Health Repos', ylabel='Number of Repos', xlabel='Name of Language')    
+<<<<<<< HEAD
+    
+    
+    
+------------------
+    
+def stemm_top_ten_words(df):
+    '''
+    '''
+    
+    # join rows of string together
+    stemm_words = ' '.join(df.clean_stemmed)
+
+    # split string by space to isolate words
+    stemm_words_list = stemm_words.split()
+
+    # create dataframe of word count
+    stemm_word_count = pd.Series(stemm_words_list).value_counts().reset_index()
+    stemm_word_count.columns=['word','count']
+
+    # drop non-words
+#     stemm_word_count = word_count.drop([0,2,5,12])
+
+    stemm_top_10_words = stemm_word_count.head(10)
+
+    return stemm_words, stemm_top_10_words
+
+
+def lemm_top_ten_words(df):
+    '''
+    '''
+    
+    # join rows of string together
+    lemm_words = ' '.join(df.clean_lemmatized)
+
+    # split string by space to isolate words
+    lemm_words_list = lemm_words.split()
+
+    # create dataframe of word count
+    lemm_word_count = pd.Series(lemm_words_list).value_counts().reset_index()
+    lemm_word_count.columns=['word','count']
+
+    # drop non-words
+#     word_count = word_count.drop([0,2,5,12])
+
+    lemm_top_10_words = lemm_word_count.head(10)
+    
+    return lemm_top_10_words, lemm_words
+
+
+def stemm_top_ten(stemm_top_10_words):
+    '''
+    '''
+    # plot bar graph for top 10 words
+    sns.barplot(data=stemm_top_10_words, x='count', y='word')
+    plt.title('Top 10 Most Common words')
+    plt.show()
+    
+    
+def lemm_top_ten(lemm_top_10_words):
+    '''
+    '''
+    # plot bar graph for top 10 words
+    sns.barplot(data=lemm_top_10_words, x='count', y='word')
+    plt.title('Top 10 Most Common words')
+    plt.show()
+    
+    
+def stemm_wordcloud(stemm_words):
+    '''
+    '''
+    
+    # create word cloud image
+    img = WordCloud(background_color='white').generate(stemm_words)
+    # axis aren't very useful for a word cloud
+    plt.axis('off')
+    # WordCloud() produces an image object, which can be displayed with plt.imshow
+    plt.imshow(img)
+    plt.show()
+    
+    
+    
+def lemm_wordcloud(lemm_words):
+    '''
+    '''
+    # create word cloud image
+    img = WordCloud(background_color='white').generate(lemm_words)
+    # axis aren't very useful for a word cloud
+    plt.axis('off')
+    # WordCloud() produces an image object, which can be displayed with plt.imshow
+    plt.imshow(img)
+    plt.show()
+    
+    
+    
+    
+
+
+
+
+    
+    
+=======
 
 >>>>>>> a10267982f6dea7c8d6cc4b6ba46e85c821402cb
+>>>>>>> 534ad6a8f13d0e1221dff7a21eb38484463d6645
