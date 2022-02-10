@@ -180,7 +180,7 @@ def knn_stemmed():
     
     
 
-def q3_model(X_train_stemmed, y_train_stemmed,X_train_lemmed, y_train_lemmed,X_test_stemmed, y_test_stemmed,X_test_lemmed, y_test_lemmed):
+def q3_dtree_model(X_train_stemmed, y_train_stemmed,X_train_lemmed, y_train_lemmed,X_test_stemmed, y_test_stemmed,X_test_lemmed, y_test_lemmed):
     
     #(X_train_stemmed, y_train_stemmed), (X_test_stemmed, y_test_stemmed) = sgs.get_Xy(train, test, cols_train="clean_stemmed")
     #(X_train_lemmed, y_train_lemmed), (X_test_lemmed, y_test_lemmed) = sgs.get_Xy(train, test, cols_train="clean_lemmatized")
