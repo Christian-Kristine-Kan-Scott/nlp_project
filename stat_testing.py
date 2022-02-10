@@ -42,3 +42,24 @@ def get_unique_lemmed_anova():
     f, p = f_oneway(java_lemmed, js_lemmed,python_lemmed, other_lemmed)
 
     return f, p
+
+def q3_stat_test():
+    sgs = SplitGetScale()
+    train, test = sgs.split(df)
+    # STEMMED
+    java_stemmed = train["cleaned_stemmed_length"][train["language"] == "Java"]
+    js_stemmed = train["cleaned_stemmed_length"][train["language"] == "JavaScript"]
+    python_stemmed = train["cleaned_stemmed_length"][train["language"] == "Python"]
+    other_stemmed = train["cleaned_stemmed_length"][train["language"] == "other"]
+
+# LEMMED
+    java_lemmed = train["cleaned_lemmed_length"][train["language"] == "Java"]
+    js_lemmed = train["cleaned_lemmed_length"][train["language"] == "JavaScript"]
+    python_lemmed = train["cleaned_lemmed_length"][train["language"] == "Python"]
+    other_lemmed = train["cleaned_lemmed_length"][train["language"] == "other"]
+    
+    print('The Anova test for Stemmed :',stats.f_oneway(java_stemmed,js_stemmed,python_stemmed,other_stemmed))
+    print('The Anova test for Lemmetize :',stats.f_oneway(java_lemmed,js_lemmed,python_lemmed,other_lemmed))
+
+    
+    
