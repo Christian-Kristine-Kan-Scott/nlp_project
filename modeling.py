@@ -2,6 +2,10 @@ import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report, accuracy_score
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn import tree
+from sklearn import metrics
 
 def lr_stemm(y_train_stemmed, y_test_stemmed, X_train_stemmed, X_test_stemmed):
     '''
@@ -173,3 +177,29 @@ def knn_stemmed():
 
     # assign accuracy to variable to call later
     knn_test_accuracy = round(knn.score(X_test_stemmed, y_test_stemmed),3)
+    
+    
+
+def q3_model(X_train_stemmed, y_train_stemmed,X_train_lemmed, y_train_lemmed,X_test_stemmed, y_test_stemmed,X_test_lemmed, y_test_lemmed):
+    
+    #(X_train_stemmed, y_train_stemmed), (X_test_stemmed, y_test_stemmed) = sgs.get_Xy(train, test, cols_train="clean_stemmed")
+    #(X_train_lemmed, y_train_lemmed), (X_test_lemmed, y_test_lemmed) = sgs.get_Xy(train, test, cols_train="clean_lemmatized")
+    
+    # instatiatiating the decision tree on Stemmed
+    dTree_stemmed = DecisionTreeClassifier(criterion = 'entropy', random_state=123, max_depth=3)
+    dTree_stemmed.fit(X_train_stemmed, y_train_stemmed)
+    # instatiatiating the decision tree on Stemmed
+
+    dTree_lemmed = DecisionTreeClassifier(criterion = 'entropy', random_state=123, max_depth=3)
+    dTree_lemmed.fit(X_train_lemmed, y_train_lemmed)
+    
+    print("Accuracy on Stemmed training set : {:.2f}".format(dTree_stemmed.score(X_train_stemmed, y_train_stemmed)))
+    
+    print("Accuracy on Stemmed testing set : {:.2f}".format(dTree_stemmed.score(X_test_stemmed,y_test_stemmed)))
+    
+    print("Accuracy on Lematized training set : {:.2f}".format(dTree_lemmed.score(X_train_lemmed, y_train_lemmed)))
+    
+    print("Accuracy on Lematized testing set : {:.2f}".format(dTree_lemmed.score(X_test_lemmed, y_test_lemmed)))
+    
+    
+    
