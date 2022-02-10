@@ -85,3 +85,91 @@ def print_rfc_metric(X_train_stemmed, X_test_stemmed, y_train_stemmed, y_test_st
     # print stemmed_lemmed test rfc accuracy
     print(f"\nTEST\nRandom Forest Classifier Stemmed Accuracy Test: {round(accuracy_score(y_test_stemmed, y_pred_test_stem ), 2)}")
     print(f"Random Forest Classifier Lemmed Accuracy Test: {round(accuracy_score(y_test_lemmed, y_pred_test_lem), 2)}")
+    
+    
+    
+    
+    
+    
+    
+def knn_lemmed():
+    
+    # Create the object
+    knn = KNeighborsClassifier(n_neighbors=5, weights='uniform')
+    
+    #fit
+    knn.fit(X_train_lemmed, y_train_lemmed)
+
+    #KNN on train
+    
+    #lemmed on trainy_test_pred = knn.predict(X_train_lemmed)
+
+    #Estimate probability
+    y_test_pred_proba = knn.predict_proba(X_train_lemmed)
+
+    #Evaluate on accuracy
+
+    # assign accuracy to variable to call later
+    knn_test_accuracy = knn.score(X_train_lemmed, y_train_lemmed)
+
+    print('Accuracy of KNN classifier on train set: {:.3f}'
+     .format(knn.score(X_train_lemmed, y_train_lemmed)))
+
+
+    
+    
+    #lemmed on test
+    y_test_pred = knn.predict(X_test_lemmed)
+
+    #Estimate probability
+    y_test_pred_proba = knn.predict_proba(X_test_lemmed)
+
+    #Evaluate on accuracy
+
+    # assign accuracy to variable to call later
+    knn_test_accuracy = knn.score(X_test_lemmed, y_test_lemmed)
+
+    print('Accuracy of KNN classifier on test set: {:.3f}'
+     .format(knn.score(X_test_lemmed, y_test_lemmed)))
+    
+    
+    
+def knn_stemmed():
+    
+    
+    # Create the object
+    knn = KNeighborsClassifier(n_neighbors=5, weights='uniform')
+
+    #Fit the model
+    knn.fit(X_train_stemmed, y_train_stemmed)
+
+    #stemmed on train
+    #Make predictions on train
+    y_train_pred = knn.predict(X_train_stemmed)
+
+    #Estimate probability
+    y_train_pred_proba = knn.predict_proba(X_train_stemmed)
+
+    #Evaluate on accuracy
+
+    # assign accuracy to variable to call later
+    knn_train_accuracy = knn.score(X_train_stemmed, y_train_stemmed)
+
+    print('Accuracy of KNN classifier on training set: {:.3f}'
+     .format(knn.score(X_train_stemmed, y_train_stemmed)))
+    
+    
+    
+    # stemmed on test
+    #Make predictions on validate
+    y_validate_pred = knn.predict(X_test_stemmed)
+
+    #Estimate probability
+    y_validate_pred_proba = knn.predict_proba(X_test_stemmed)
+
+    #Evaluate on accuracy
+    print('Accuracy of KNN classifier on test set: {:.3f}'
+     .format(knn.score(X_test_stemmed, y_test_stemmed)))
+
+    # assign accuracy to variable to call later
+    knn_test_accuracy = round(knn.score(X_test_stemmed, y_test_stemmed),3)
