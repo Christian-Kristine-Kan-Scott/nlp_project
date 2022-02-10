@@ -36,4 +36,22 @@ def get_unique_lemmed_viz():
     _, lang_mean_unique_lemma = get_unique_groups()
     sns.barplot(x=lang_mean_unique_lemma.index, y=lang_mean_unique_lemma["mean"])
 
+    
+    
+    
+def idf_words_viz():
+    '''
+    Shows bar plot for 2 given points
+    '''
+    sns.barplot(data=words_idf, x='idf', y='words', palette="Blues_d")
+    plt.title('IDF of most common words')
+    plt.show()
 
+    
+def repo_language():
+    '''
+    Shows bar plot for 2 given points
+    '''
+    fig = plt.figure(figsize=(8, 5))
+    ax = df.language.value_counts().plot.bar(width=.7, ec='black', color='teal')
+    ax.set(title='Distribution of Languages in Health Repos', ylabel='Number of Repos', xlabel='Name of Language')    
