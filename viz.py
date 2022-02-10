@@ -3,6 +3,7 @@ import pandas as pd
 from split_get_scale import SplitGetScale
 import seaborn as sns
 import matplotlib.pyplot as plt
+from wordcloud import WordCloud
 
 # read in the dataframe
 df = pd.read_csv("nutrition_repos_clean_stemmed_lemmatize.csv")
@@ -35,5 +36,8 @@ def get_unique_lemmed_viz():
 
     _, lang_mean_unique_lemma = get_unique_groups()
     sns.barplot(x=lang_mean_unique_lemma.index, y=lang_mean_unique_lemma["mean"])
+    
+    
+
 
 
