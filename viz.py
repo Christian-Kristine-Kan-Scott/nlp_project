@@ -1,69 +1,70 @@
 # imports
 import pandas as pd
-from split_get_scale import SplitGetScale
 import seaborn as sns
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
+import numpy as np
 
-# read in the dataframe
-df = pd.read_csv("nutrition_repos_clean_stemmed_lemmatize.csv")
-
-# if required split the data into training and testing
-sgs = SplitGetScale()
-train, test = sgs.split(df)
-train_for_viz = train.copy()
-
+# scott's begin
 def get_unique_words(string):
     num_unique_words = len(set(string.split()))
     return num_unique_words
 
-def get_unique_groups():
+def get_unique_groups(df):
 
-    train_for_viz["cleaned_stemmed_unique"] = train_for_viz["clean_stemmed"].apply(get_unique_words)
-    train_for_viz["cleaned_lemmed_unique"] = train_for_viz["clean_lemmatized"].apply(get_unique_words)
+    df["cleaned_stemmed_unique"] = df["clean_stemmed"].apply(get_unique_words)
+    df["cleaned_lemmed_unique"] = df["clean_lemmatized"].apply(get_unique_words)
 
-    lang_mean_unqiue_stemmed = train_for_viz.groupby("language")["cleaned_stemmed_unique"].agg(["mean"])
-    lang_mean_unique_lemma = train_for_viz.groupby("language")["cleaned_lemmed_unique"].agg(["mean"])
+    lang_mean_unqiue_stemmed = df.groupby("language")["cleaned_stemmed_unique"].agg(["mean"])
+    lang_mean_unique_lemma = df.groupby("language")["cleaned_lemmed_unique"].agg(["mean"])
 
     return lang_mean_unqiue_stemmed, lang_mean_unique_lemma
 
-def get_unique_stemmed_viz():
+def get_unique_stemmed_viz(df):
 
-    lang_mean_unqiue_stemmed, _ = get_unique_groups()
+    lang_mean_unqiue_stemmed, _ = get_unique_groups(df)
     sns.barplot(x=lang_mean_unqiue_stemmed.index, y=lang_mean_unqiue_stemmed["mean"])
 
-def get_unique_lemmed_viz():
+def get_unique_lemmed_viz(df):
 
-    _, lang_mean_unique_lemma = get_unique_groups()
+    _, lang_mean_unique_lemma = get_unique_groups(df)
     sns.barplot(x=lang_mean_unique_lemma.index, y=lang_mean_unique_lemma["mean"])
-    
-    
+# end scott
 
+# kristine's start
+def idf(word):
+    '''A simple way to calculate idf for demonstration. Note that this
+    function relies on a globally defined blogs variable.'''
 
+    filename = "nutrition_repos_clean_stemmed_lemmatize.csv"
+    df = pd.read_csv(filename)
 
-    
+    docs = [doc for doc in df["clean_lemmatized"]]
+    n_occurences = sum([1 for doc in docs if word in doc])
+    return len(docs) / n_occurences
 
+def data_words_idf(df):
 
-    
-def data_words_idf(): 
+    #create common words array
+    common_words = np.array(['food', 'nutrition', 'user', 'data', 'gram', 'recipe','use','app','database','file'])
+
     # put the unique words into a data frame
     words_idf = (pd.DataFrame(dict(words=common_words))
-             
+
     # calculate the idf for each word
-    .assign(idf=lambda train: train.words.apply(idf))
-             
+    .assign(idf=lambda df: df.words.apply(idf))
+
     # sort the data for presentation purposes
     .set_index('words')
     .sort_values(by='idf', ascending=True))
-    
-    #create common words array
-    common_words = np.array(['food', 'nutrition', 'user', 'data', 'gram', 'recipe','use','app','database','file'])
-    
+
     #reset index
     words_idf.reset_index(inplace=True)
 
-    
-def idf_words_viz():
+    return words_idf
+
+
+def idf_words_viz(words_idf):
     '''
     Shows bar plot for 2 given points
     '''
@@ -71,26 +72,31 @@ def idf_words_viz():
     plt.title('IDF of most common words')
     plt.show()
 
-    
-def repo_language():
+
+def repo_language(df):
     '''
     Shows bar plot for 2 given points
     '''
     fig = plt.figure(figsize=(8, 5))
     ax = df.language.value_counts().plot.bar(width=.7, ec='black', color='teal')
-<<<<<<< HEAD
-    ax.set(title='Distribution of Languages in Health Repos', ylabel='Number of Repos', xlabel='Name of Language') 
-    
-    
-def q3_viz():
-    df = pd.read_csv('nutrition_repos_clean_stemmed_lemmatize.csv')
+
+    ax.set(title='Distribution of Languages in Health Repos', ylabel='Number of Repos', xlabel='Name of Language')
+# end kristine
+
+# christian start
+def get_readme_length(string):
+    length = len(string.split())
+    return length
+
+def q3_viz(df):
+
     df["cleaned_stemmed_length"] = df["clean_stemmed"].apply(get_readme_length)
     df["cleaned_lemmed_length"] = df["clean_lemmatized"].apply(get_readme_length)
-    
+
     lem_df = df.groupby("language")["cleaned_lemmed_length"].agg(["mean"])
     lem_df_desc = lem_df.sort_values('mean', ascending=True)
     ax = lem_df_desc.plot(kind="barh")
-    
+
     # Get a Matplotlib figure from the axes object for formatting purposes
     fig = ax.get_figure()
     # Change the plot dimensions (width, height)
@@ -98,18 +104,15 @@ def q3_viz():
     # Change the axes labels
     ax.set_xlabel("Programming Language ")
     ax.set_ylabel("Average Length of READme")
-=======
-    ax.set(title='Distribution of Languages in Health Repos', ylabel='Number of Repos', xlabel='Name of Language')    
-<<<<<<< HEAD
-    
-    
-    
-------------------
-    
+
+    ax.set(title='Distribution of Languages in Health Repos', ylabel='Number of Repos', xlabel='Name of Language')
+# christian end
+
+# kan start
 def stemm_top_ten_words(df):
     '''
     '''
-    
+
     # join rows of string together
     stemm_words = ' '.join(df.clean_stemmed)
 
@@ -121,7 +124,7 @@ def stemm_top_ten_words(df):
     stemm_word_count.columns=['word','count']
 
     # drop non-words
-#     stemm_word_count = word_count.drop([0,2,5,12])
+    # stemm_word_count = word_count.drop([0,2,5,12])
 
     stemm_top_10_words = stemm_word_count.head(10)
 
@@ -131,7 +134,7 @@ def stemm_top_ten_words(df):
 def lemm_top_ten_words(df):
     '''
     '''
-    
+
     # join rows of string together
     lemm_words = ' '.join(df.clean_lemmatized)
 
@@ -143,10 +146,10 @@ def lemm_top_ten_words(df):
     lemm_word_count.columns=['word','count']
 
     # drop non-words
-#     word_count = word_count.drop([0,2,5,12])
+    # word_count = word_count.drop([0,2,5,12])
 
     lemm_top_10_words = lemm_word_count.head(10)
-    
+
     return lemm_top_10_words, lemm_words
 
 
@@ -155,23 +158,23 @@ def stemm_top_ten(stemm_top_10_words):
     '''
     # plot bar graph for top 10 words
     sns.barplot(data=stemm_top_10_words, x='count', y='word')
-    plt.title('Top 10 Most Common words')
+    plt.title('Top 10 Most Common Stemmed words')
     plt.show()
-    
-    
+
+
 def lemm_top_ten(lemm_top_10_words):
     '''
     '''
     # plot bar graph for top 10 words
     sns.barplot(data=lemm_top_10_words, x='count', y='word')
-    plt.title('Top 10 Most Common words')
+    plt.title('Top 10 Most Common Lemmatized words')
     plt.show()
-    
-    
+
+
 def stemm_wordcloud(stemm_words):
     '''
     '''
-    
+
     # create word cloud image
     img = WordCloud(background_color='white').generate(stemm_words)
     # axis aren't very useful for a word cloud
@@ -179,9 +182,9 @@ def stemm_wordcloud(stemm_words):
     # WordCloud() produces an image object, which can be displayed with plt.imshow
     plt.imshow(img)
     plt.show()
-    
-    
-    
+
+
+
 def lemm_wordcloud(lemm_words):
     '''
     '''
@@ -192,17 +195,4 @@ def lemm_wordcloud(lemm_words):
     # WordCloud() produces an image object, which can be displayed with plt.imshow
     plt.imshow(img)
     plt.show()
-    
-    
-    
-    
-
-
-
-
-    
-    
-=======
-
->>>>>>> a10267982f6dea7c8d6cc4b6ba46e85c821402cb
->>>>>>> 534ad6a8f13d0e1221dff7a21eb38484463d6645
+# kan end
