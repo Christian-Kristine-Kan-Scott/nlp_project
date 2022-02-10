@@ -40,8 +40,28 @@ def get_unique_lemmed_viz():
     
 
 
+
     
+
+
     
+def data_words_idf(): 
+    # put the unique words into a data frame
+    words_idf = (pd.DataFrame(dict(words=common_words))
+             
+    # calculate the idf for each word
+    .assign(idf=lambda train: train.words.apply(idf))
+             
+    # sort the data for presentation purposes
+    .set_index('words')
+    .sort_values(by='idf', ascending=True))
+    
+    #create common words array
+    common_words = np.array(['food', 'nutrition', 'user', 'data', 'gram', 'recipe','use','app','database','file'])
+    
+    #reset index
+    words_idf.reset_index(inplace=True)
+
     
 def idf_words_viz():
     '''
@@ -59,3 +79,4 @@ def repo_language():
     fig = plt.figure(figsize=(8, 5))
     ax = df.language.value_counts().plot.bar(width=.7, ec='black', color='teal')
     ax.set(title='Distribution of Languages in Health Repos', ylabel='Number of Repos', xlabel='Name of Language')    
+
