@@ -22,7 +22,8 @@ In this project, we will utilize the text in README files of x repositories that
 - Explore
     - Create visualizations of data to pin point key text words that correllate to programming languages
     - Create a visualizations correlating to hypotheses statements
-    - Run at least two statistical tests that will support whether the hypothesis has been rejected or not
+    - Run statistical tests that will support whether the hypothesis has been rejected or not
+    - Create explore.py file to will store visualizations needed for final report
 - Modeling
     - Establish baseline
     - Ensure models are tested on appropriate validate and test datasets
@@ -52,7 +53,6 @@ In this project, we will utilize the text in README files of x repositories that
 
 
 ##  Steps to Reproduce
-- Acquire dataset
 - Clone my repo (including an acquire.py and prepare.py) (confirm .gitignore is hiding your env.py file)
 - Libraries used are pandas, matplotlib, seaborn, numpy, sklearn.
 - Document conclusions, takeaways, and next steps in the Final Report Notebook.
@@ -65,13 +65,13 @@ In this project, we will utilize the text in README files of x repositories that
 
  
 
-| Variable          | Description                            |Data types|
-| ----------------- | -------------------------------------- |----------|
-| language          |Differents languages in the READme      |          |
-| readme_contents   |Contents of the Readme                  |          |
-| clean             |Clean Version of the Readme contents    |          |
-| clean_stemmed     |Stemmed version of the clean ReadMe     |          |
-| clean_lemmatized  |                                        |          |
+| Variable          | Description                                                  |Data types|
+| ----------------- | -----------------------------------------------------------  |----------|
+| language          |The programming language the README is in                     |          |
+| readme_contents   |The text included in each README                              |          |
+| clean             |Clean Version of the README contents                          |          |
+| clean_stemmed     |The contents of the README that has been stemmed              |          |
+| clean_lemmatized  |The contents of the README that has been lemmatized           |          |
 | 
  
 ## Key findings, recommendations and takeaways
@@ -82,6 +82,3 @@ In this project, we will utilize the text in README files of x repositories that
  
 
 ## Next steps
- 
-
-language,readme_contents,clean,clean_stemmed,clean_lemmatized
