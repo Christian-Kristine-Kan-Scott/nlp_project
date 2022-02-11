@@ -51,8 +51,9 @@ def lr_lemm(y_train_lemmed, y_test_lemmed, X_train_lemmed, X_test_lemmed):
 
 def lr_print(y_train_lemmed, y_test_lemmed, y_train_stemmed, y_test_stemmed):
     '''
-    This function prints the accuracy score for for stemm and lemm data using logistics regression
-    '''
+    This function takes the lr_lemm and lr_stemm fucntions adn prints the accuracy score 
+    for for stemm and lemm data using logistics regression
+    '''  
     print(f"TRAIN\nLogistics Regression Stemmed Accuracy: {round(accuracy_score(y_train_stemmed.actual, y_train_stemmed.predicted), 2)}")
     print(f"Logistics Regression Lemmed Accuracy: {round(accuracy_score(y_train_lemmed.actual, y_train_lemmed.predicted), 2)}")
 
