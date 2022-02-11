@@ -67,11 +67,11 @@ In this project, we will utilize the text in README files of 130 repositories th
 
 | Variable          | Description                                                  |Data types|
 | ----------------- | -----------------------------------------------------------  |----------|
-| language          |The programming language the README is in                     |          |
-| readme_contents   |The text included in each README                              |          |
-| clean             |Clean Version of the README contents                          |          |
-| clean_stemmed     |The contents of the README that has been stemmed              |          |
-| clean_lemmatized  |The contents of the README that has been lemmatized           |          |
+| language          |The programming language the README is in                     |object    |
+| readme_contents   |The text included in each README                              |object    |
+| clean             |Clean Version of the README contents                          |object    |
+| clean_stemmed     |The contents of the README that has been stemmed              |object    |
+| clean_lemmatized  |The contents of the README that has been lemmatized           |object    |
 | 
  
 ## Key findings, recommendations and takeaways
@@ -85,7 +85,9 @@ In this project, we will utilize the text in README files of 130 repositories th
 
  
 ## Recommendations
-- Scrape more data to build a more accurate model
+- Don't use model yet
  
 
 ## Next steps
+- Scrape more data to build a more accurate model
+- Use additional features using README length and number of unique words
