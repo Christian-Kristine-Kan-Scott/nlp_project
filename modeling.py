@@ -7,6 +7,10 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn import tree
 from sklearn import metrics
 
+def get_baseline(df):
+    return round((df.language == "other").mean(), 2)
+
+# kan start
 def lr_stemm(y_train_stemmed, y_test_stemmed, X_train_stemmed, X_test_stemmed):
     '''
     This function takes stemm data and creates dataframes for y_test and y_train.
@@ -55,8 +59,9 @@ def lr_print(y_train_lemmed, y_test_lemmed, y_train_stemmed, y_test_stemmed):
 
     print(f"\nTEST\nLogistics Regression Stemmed Accuracy Test: {round(accuracy_score(y_test_stemmed.actual, y_test_stemmed.predicted), 2)}")
     print(f"Logistics Regression Lemmed Accuracy Test: {round(accuracy_score(y_test_lemmed.actual, y_test_lemmed.predicted), 2)}")
+# kan end
 
-
+# scott start
 def rfc_stem(X_train_stemmed, X_test_stemmed, y_train_stemmed):
 
     # fit and predict with stemmed data
@@ -89,23 +94,20 @@ def print_rfc_metric(X_train_stemmed, X_test_stemmed, y_train_stemmed, y_test_st
     # print stemmed_lemmed test rfc accuracy
     print(f"\nTEST\nRandom Forest Classifier Stemmed Accuracy Test: {round(accuracy_score(y_test_stemmed, y_pred_test_stem ), 2)}")
     print(f"Random Forest Classifier Lemmed Accuracy Test: {round(accuracy_score(y_test_lemmed, y_pred_test_lem), 2)}")
-    
-    
-    
-    
-    
-    
-    
-def knn_lemmed():
-    
+# scott end
+
+
+# kristine start
+def knn_lemmed(X_train_lemmed, y_train_lemmed, X_test_lemmed, y_test_lemmed):
+
     # Create the object
     knn = KNeighborsClassifier(n_neighbors=5, weights='uniform')
-    
+
     #fit
     knn.fit(X_train_lemmed, y_train_lemmed)
 
     #KNN on train
-    
+
     #lemmed on trainy_test_pred = knn.predict(X_train_lemmed)
 
     #Estimate probability
@@ -119,9 +121,6 @@ def knn_lemmed():
     print('Accuracy of KNN classifier on train set: {:.3f}'
      .format(knn.score(X_train_lemmed, y_train_lemmed)))
 
-
-    
-    
     #lemmed on test
     y_test_pred = knn.predict(X_test_lemmed)
 
@@ -135,12 +134,10 @@ def knn_lemmed():
 
     print('Accuracy of KNN classifier on test set: {:.3f}'
      .format(knn.score(X_test_lemmed, y_test_lemmed)))
-    
-    
-    
-def knn_stemmed():
-    
-    
+
+
+def knn_stemmed(X_train_stemmed, y_train_stemmed, X_test_stemmed, y_test_stemmed):
+
     # Create the object
     knn = KNeighborsClassifier(n_neighbors=5, weights='uniform')
 
@@ -161,9 +158,7 @@ def knn_stemmed():
 
     print('Accuracy of KNN classifier on training set: {:.3f}'
      .format(knn.score(X_train_stemmed, y_train_stemmed)))
-    
-    
-    
+
     # stemmed on test
     #Make predictions on validate
     y_validate_pred = knn.predict(X_test_stemmed)
@@ -177,14 +172,14 @@ def knn_stemmed():
 
     # assign accuracy to variable to call later
     knn_test_accuracy = round(knn.score(X_test_stemmed, y_test_stemmed),3)
-    
-    
+# kristine end
 
+# christian start
 def q3_dtree_model(X_train_stemmed, y_train_stemmed,X_train_lemmed, y_train_lemmed,X_test_stemmed, y_test_stemmed,X_test_lemmed, y_test_lemmed):
-    
+
     #(X_train_stemmed, y_train_stemmed), (X_test_stemmed, y_test_stemmed) = sgs.get_Xy(train, test, cols_train="clean_stemmed")
     #(X_train_lemmed, y_train_lemmed), (X_test_lemmed, y_test_lemmed) = sgs.get_Xy(train, test, cols_train="clean_lemmatized")
-    
+
     # instatiatiating the decision tree on Stemmed
     dTree_stemmed = DecisionTreeClassifier(criterion = 'entropy', random_state=123, max_depth=3)
     dTree_stemmed.fit(X_train_stemmed, y_train_stemmed)
@@ -192,14 +187,12 @@ def q3_dtree_model(X_train_stemmed, y_train_stemmed,X_train_lemmed, y_train_lemm
 
     dTree_lemmed = DecisionTreeClassifier(criterion = 'entropy', random_state=123, max_depth=3)
     dTree_lemmed.fit(X_train_lemmed, y_train_lemmed)
-    
+
     print("Accuracy on Stemmed training set : {:.2f}".format(dTree_stemmed.score(X_train_stemmed, y_train_stemmed)))
-    
+
     print("Accuracy on Stemmed testing set : {:.2f}".format(dTree_stemmed.score(X_test_stemmed,y_test_stemmed)))
-    
+
     print("Accuracy on Lematized training set : {:.2f}".format(dTree_lemmed.score(X_train_lemmed, y_train_lemmed)))
-    
+
     print("Accuracy on Lematized testing set : {:.2f}".format(dTree_lemmed.score(X_test_lemmed, y_test_lemmed)))
-    
-    
-    
+# christian end
