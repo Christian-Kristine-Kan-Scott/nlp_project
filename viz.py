@@ -2,8 +2,11 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+plt.rc('figure', figsize=(13, 7))
 from wordcloud import WordCloud
 import numpy as np
+
+
 
 # scott's begin
 def get_unique_words(string):
@@ -111,6 +114,8 @@ def q3_viz(df):
 # kan start
 def stemm_top_ten_words(df):
     '''
+    This function takes cleaned stemmed column from the df and joins them to make a string. 
+    It splits the string by space to produce a list that then produces a value_counts df.
     '''
 
     # join rows of string together
@@ -124,7 +129,7 @@ def stemm_top_ten_words(df):
     stemm_word_count.columns=['word','count']
 
     # drop non-words
-    # stemm_word_count = word_count.drop([0,2,5,12])
+    stemm_word_count = stemm_word_count.drop([0,4,7])
 
     stemm_top_10_words = stemm_word_count.head(10)
 
@@ -133,6 +138,8 @@ def stemm_top_ten_words(df):
 
 def lemm_top_ten_words(df):
     '''
+    This function takes cleaned lemmed column from the df and joins them to make a string. 
+    It splits the string by space to produce a list that then produces a value_counts df.
     '''
 
     # join rows of string together
@@ -146,7 +153,7 @@ def lemm_top_ten_words(df):
     lemm_word_count.columns=['word','count']
 
     # drop non-words
-    # word_count = word_count.drop([0,2,5,12])
+    lemm_word_count = lemm_word_count.drop([0,2,5,12])
 
     lemm_top_10_words = lemm_word_count.head(10)
 
@@ -155,6 +162,7 @@ def lemm_top_ten_words(df):
 
 def stemm_top_ten(stemm_top_10_words):
     '''
+    This function creates barplot of the top ten most used stemmatized words
     '''
     # plot bar graph for top 10 words
     sns.barplot(data=stemm_top_10_words, x='count', y='word')
@@ -164,6 +172,7 @@ def stemm_top_ten(stemm_top_10_words):
 
 def lemm_top_ten(lemm_top_10_words):
     '''
+    This function creates barplot of the top ten most used lemmatized words
     '''
     # plot bar graph for top 10 words
     sns.barplot(data=lemm_top_10_words, x='count', y='word')
@@ -173,6 +182,7 @@ def lemm_top_ten(lemm_top_10_words):
 
 def stemm_wordcloud(stemm_words):
     '''
+    This fuction prouces a word cloud from the stemm words column
     '''
 
     # create word cloud image
@@ -187,6 +197,7 @@ def stemm_wordcloud(stemm_words):
 
 def lemm_wordcloud(lemm_words):
     '''
+    This functino produces a word cloud from the lemmatized words
     '''
     # create word cloud image
     img = WordCloud(background_color='white').generate(lemm_words)
